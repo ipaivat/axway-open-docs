@@ -1,125 +1,134 @@
 {
-    "title":"Data storage for high availability",
-    "linkTitle":"Data storage for HA",
-    "weight":"3",
-    "date":"2019-08-09",
-    "description":"Understand where API Portal stores API Management data."
+"title": "Data storage for high availability",
+  "linkTitle": "Data storage for HA",
+  "weight": "3",
+  "date": "2019-08-09",
+  "description": "Understand where API Portal stores API Management data."
 }
-
 ## Data storage
 
 API Portal stores API Management data both in relational database management system (RDBMS) and as files on disk. The stored data includes, for example, configuration data and logs, all API Portal customizations, as well as articles and their related data posted in Joomla!, blog, or discussion forum.
 
 The following describes where API Portal stores data. In RDBMS, `#_` stands for the table prefix of the DB schema. The default `INSTALL_DIR` is `/opt/axway/apiportal/htdoc`.
 
+This is a test.
+
 ### System
 
 1. API Manager settings (For example, IP address, certificates.)
 
-    * Files on disk
-        * `INSTALL_DIR/administrator/components/com_apiportal/assets/cert`
-    * RDBMS
-        * `#_apiportal_configuration`
+   * Files on disk
 
+     * `INSTALL_DIR/administrator/components/com_apiportal/assets/cert`
+   * RDBMS
+
+     * `#_apiportal_configuration`
 2. Logs
 
-    * Files on disk
-        * `INSTALL_DIR/logs`
-        * (Software installation) `/var/log/httpd/error_log`
+   * Files on disk
 
+     * `INSTALL_DIR/logs`
+     * (Software installation) `/var/log/httpd/error_log`
 3. Public API mode key file
 
-    * Files on disk
-        * The custom path you specified for the encryption key at install time.
+   * Files on disk
+
+     * The custom path you specified for the encryption key at install time.
 
 ### Customization
 
 1. Theme Magic customizations
 
-    * Files on disk
-        * `INSTALL_DIR/templates/purity_iii`
+   * Files on disk
 
+     * `INSTALL_DIR/templates/purity_iii`
 2. Stylesheets (CSS and LESS)
 
-    * Files on disk
-        * `INSTALL_DIR/templates/purity_iii/`
+   * Files on disk
 
+     * `INSTALL_DIR/templates/purity_iii/`
 3. Company logo
 
-    * Files on disk
-        * `INSTALL_DIR/components/com_apiportal/assets/img/menu/`
-    * RDBMS
-        * `#_menu`
+   * Files on disk
 
+     * `INSTALL_DIR/components/com_apiportal/assets/img/menu/`
+   * RDBMS
+
+     * `#_menu`
 4. Menu entries and order
 
-    * RDBMS
-        * `#_menu`
-        * `#_menu_types`
+   * RDBMS
 
+     * `#_menu`
+     * `#_menu_types`
 5. Changes in the PHP code
 
-    * Files on disk
-        * `INSTALL_DIR/components/com_apiportal/views/`
+   * Files on disk
 
+     * `INSTALL_DIR/components/com_apiportal/views/`
 6. ReCaptcha plug-in
 
-    * RDBMS
-        * `#_extensions`
+   * RDBMS
+
+     * `#_extensions`
 
 ### Localization
 
 1. Installed languages
 
-    * Files on disk
-        * `INSTALL_DIR/language`
-        * `INSTALL_DIR/administrator/language`
-        * `INSTALL_DIR/administrator/manifests/packages`
-    * RDBMS
-        * `#_extensions`
+   * Files on disk
 
+     * `INSTALL_DIR/language`
+     * `INSTALL_DIR/administrator/language`
+     * `INSTALL_DIR/administrator/manifests/packages`
+   * RDBMS
+
+     * `#_extensions`
 2. Language content
 
-    * RDBMS
-        * `#_menu`
-        * `#_content`
-        * `#_categories`
+   * RDBMS
+
+     * `#_menu`
+     * `#_content`
+     * `#_categories`
 
 ### Articles and posts
 
 1. Joomla! articles
 
-    * RDBMS
-        * `#_content`
-        * `#_content_frontpage`
-        * `#_content_rating`
-        * `#_content_types`
-        * `#_content_item_tag_map`
+   * RDBMS
 
+     * `#_content`
+     * `#_content_frontpage`
+     * `#_content_rating`
+     * `#_content_types`
+     * `#_content_item_tag_map`
 2. Attachments uploaded to Joomla! content
 
-    * Files on disk
-        * `INSTALL_DIR/images`
+   * Files on disk
 
+     * `INSTALL_DIR/images`
 3. Joomla! categories
 
-    * RDBMS
-        * `#_categories`
+   * RDBMS
 
+     * `#_categories`
 4. EasyBlog and EasyDiscuss settings and posts
 
-    * RDBMS: Settings and Posts
-        * `#_easyblog_configs`
-        * `#_discuss_configs`
+   * RDBMS: Settings and Posts
 
+     * `#_easyblog_configs`
+     * `#_discuss_configs`
 5. EasyBlog and EasyDiscuss attachments
 
-    * Files on disk
-        * `INSTALL_DIR/images/easyblog_*`
-        * `INSTALL_DIR/media/com_easydiscuss`
-    * RDBMS
-        * `#_easyblog_configs`
-        * `#_discuss_configs`
+   * Files on disk
+
+     * `INSTALL_DIR/images/easyblog_*`
+     * `INSTALL_DIR/media/com_easydiscuss`
+   * RDBMS
+
+     * `#_easyblog_configs`
+     * `#_discuss_configs`
 
 ### Recommended API Portal data replication
 
@@ -136,17 +145,17 @@ It is recommended to use automatic data replication whenever possible, and to co
 
 The replication options depend on the data type and where it is stored, as shown in the following table:
 
-|Data type|Replication between datacenters|
-|---------|----------------|
-|**System**|   |
-|API Manager settings (IP, cert)|Automatic, RDBMS cluster.|
-|Logs|Not applicable (local file-based data only).|
-|**Customization**|   |
-|Theme Magic changes, stylesheets, company logo, changes in the PHP code.|Automatic (shared file system and RDBMS cluster) or static process (deployment process).|
-|Menu entries and order, reCaptcha plug-in.|Automatic (RDBMS cluster) or static process (deployment process).|
-|**Localization**|   |
-|Languages Installed|Automatic (shared file system and RDBMS cluster) or static process (deployment process).|
-|Languages Content|Automatic (RDBMS cluster) or static process (deployment process).|
-|**Articles and posts**|   |
-|Joomla! articles and categories, EasyBlog and EasyDiscussions settings and posts.|Automatic, RDBMS cluster.|
-|Attachments uploaded to articles, blog posts, or discussion forum.|Automatic, shared file system.|
+| Data type                                                                         | Replication between datacenters                                                          |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **System**                                                                        |                                                                                          |
+| API Manager settings (IP, cert)                                                   | Automatic, RDBMS cluster.                                                                |
+| Logs                                                                              | Not applicable (local file-based data only).                                             |
+| **Customization**                                                                 |                                                                                          |
+| Theme Magic changes, stylesheets, company logo, changes in the PHP code.          | Automatic (shared file system and RDBMS cluster) or static process (deployment process). |
+| Menu entries and order, reCaptcha plug-in.                                        | Automatic (RDBMS cluster) or static process (deployment process).                        |
+| **Localization**                                                                  |                                                                                          |
+| Languages Installed                                                               | Automatic (shared file system and RDBMS cluster) or static process (deployment process). |
+| Languages Content                                                                 | Automatic (RDBMS cluster) or static process (deployment process).                        |
+| **Articles and posts**                                                            |                                                                                          |
+| Joomla! articles and categories, EasyBlog and EasyDiscussions settings and posts. | Automatic, RDBMS cluster.                                                                |
+| Attachments uploaded to articles, blog posts, or discussion forum.                | Automatic, shared file system.                                                           |
